@@ -21,3 +21,6 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm test
+    - run: bash <(curl -s https://codecov.io/bash)
+      env:
+        CODECOV_TOKEN: "285562ee-6a53-4be6-af23-a2409578c7a5"
