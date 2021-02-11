@@ -8,9 +8,20 @@ const loadCollection = () => {
     );
 };
 
+/**
+ * inserts a new planet if a planet doesn't already exist with the same name
+ * and solarSystem values
+ * If a planet does exist with these values then it is updated with the new values
+ * @param solarObject
+ * @returns {Promise<*>}
+ */
 const createPlanet = async solarObject => {
     const collection = loadCollection();
-    return await collection.insertOne(solarObject);
+    return await collection.update(
+        { name: solarObject.name, solarSystem: solarObject.solarSystem },
+        solarObject,
+        { upsert: true }
+    );
 };
 
 const updatePlanet = async solarObject => {

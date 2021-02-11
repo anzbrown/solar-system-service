@@ -37,15 +37,6 @@ planetRouter.post(planetPath, async (req, res, next) => {
         next(error);
     }
 });
-planetRouter.put(planetPath, async (req, res, next) => {
-    try {
-        const planet = req.body;
-        await updatePlanet(planet);
-        res.send(planet);
-    } catch (error) {
-        next(error);
-    }
-});
 module.exports = {
     planetRouter,
 };

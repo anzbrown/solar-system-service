@@ -29,6 +29,16 @@ const getPlanet = async (solarSystem, name) => {
     return planet ?? throwError(`No planet exists named: ${name}`, 404);
 };
 
+/**
+ * functions as the Create new planet and Update existing planet method
+ * if a planet does not exist with a specific name and solar system value,
+ * then a new planet is created with these values.
+ * If a planet already exists with the name and solar system values, then its
+ * values are replaced with the new values from the request body
+ * @param solarSystem to create the new planet in
+ * @param planet the new planet being created
+ * @returns {Promise<void>}
+ */
 const addPlanet = async (solarSystem, planet) => {
     try {
         await validatePlanet(planet);
@@ -47,6 +57,4 @@ const addPlanet = async (solarSystem, planet) => {
     }
 };
 
-const updatePlanet = async () => {};
-
-module.exports = { getPlanets, getPlanet, addPlanet, updatePlanet };
+module.exports = { getPlanets, getPlanet, addPlanet };

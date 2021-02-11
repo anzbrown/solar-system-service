@@ -1,5 +1,20 @@
 [
   {
+    "id": 0,
+    "name": "Sol",
+    "solarSystem": "Milky Way",
+    "mass": 1988500,
+    "diameter": 1391000,
+    "density": 1408,
+    "gravity": 274.0,
+    "escapeVelocity": 617.6,
+    "distanceFromSun": 0,
+    "meanTemperature": 5498.85,
+    "numberOfMoons": 0,
+    "hasRingSystem": false,
+    "hasGlobalMagneticField": false
+  },
+  {
     "id": 1,
     "name": "Mercury",
     "solarSystem": "Milky Way",
