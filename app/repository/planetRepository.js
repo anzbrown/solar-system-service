@@ -1,10 +1,11 @@
-const assert = require('assert');
+const { throwError } = require('../util/utils');
 const { mongo } = require('../config/mongo');
 const COLLECTION = 'planets';
 
 const loadCollection = () => {
-    assert.notEqual(mongo.db, null);
-    return mongo.db.collection(COLLECTION);
+    return (
+        mongo.db?.collection(COLLECTION) ?? throwError('Database errors.', 500)
+    );
 };
 
 const createPlanet = async solarObject => {
