@@ -4,7 +4,6 @@ const { logger } = require('../util/logger');
 
 const mongo = { connection: null };
 const DB_NAME = 'solar_objects';
-const COLLECTION = 'planets';
 
 mongo.connect = async (
     url = 'mongodb://172.18.0.2:27017',
@@ -16,7 +15,7 @@ mongo.connect = async (
     };
     const client = await MongoClient.connect(url, connectionOptions);
     mongo.db = client.db(dbName);
-    logger.info('Connected to URL = %s, DB Name = %s', url, dbName);
+    logger.info(`Connected to URL = ${url}, DB Name = ${dbName}`);
 };
 
 mongo.close = () => {
@@ -24,4 +23,4 @@ mongo.close = () => {
     mongo.connection.close();
 };
 
-module.exports = { mongo, COLLECTION };
+module.exports = { mongo };

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { helm, corsOptions } = require('./config/securitySettings');
 const { errorHandler } = require('./routes/middleware/errorHandler');
 const { healthRouter } = require('./routes/api/healthRouter');
-const { menuRouter } = require('./routes/api/menuRouter');
+const { planetRouter } = require('./routes/api/planetRouter');
 
 const app = () => {
     const expressApi = express();
@@ -19,7 +19,7 @@ const app = () => {
 
     // Unauthenticated routes
     expressApi.use(baseApiRoute, healthRouter);
-    expressApi.use(baseApiRoute, menuRouter);
+    expressApi.use(baseApiRoute, planetRouter);
 
     // error handler
     expressApi.use((error, req, res, next) =>

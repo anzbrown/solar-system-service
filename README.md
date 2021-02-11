@@ -5,3 +5,11 @@
 
 This service will provide detailed information about the solar system based on data scraped from NASA's Jet Propulsion
 Laboratory and provided by [devstronomy](https://devstronomy.com/#/datasets#downloads).
+
+## Development
+To start the project run:
+```
+docker-compose up --build
+```
+This will startup a MongoDB service for storing the solar system information, a second Mongo service to seed the `planets` 
+and `satellites` collections from the NASA json files, and finally a NodeJS 14 Express App to serve as the REST API.
