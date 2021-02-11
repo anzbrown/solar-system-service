@@ -1,7 +1,8 @@
 const Joi = require('joi');
 
 const planetSchema = Joi.object({
-    name: Joi.string().alphanum().required(),
+    name: Joi.string().required(),
+    solarSystem: Joi.string().required(),
     mass: Joi.number().required(),
     diameter: Joi.number().required(),
     density: Joi.number().required(),

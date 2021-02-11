@@ -31,7 +31,7 @@ planetRouter.post(planetPath, async (req, res, next) => {
     try {
         const { solarSystem } = req.params;
         const planet = req.body;
-        await addPlanet(planet);
+        await addPlanet(solarSystem, planet);
         res.send(planet);
     } catch (error) {
         next(error);

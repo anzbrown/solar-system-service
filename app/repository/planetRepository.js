@@ -7,9 +7,14 @@ const loadCollection = () => {
     return mongo.db.collection(COLLECTION);
 };
 
-const insert = async solarObject => {
+const createPlanet = async solarObject => {
     const collection = loadCollection();
-    return collection.insertOne(solarObject);
+    return await collection.insertOne(solarObject);
+};
+
+const updatePlanet = async solarObject => {
+    const collection = loadCollection();
+    return await collection.updateOne(solarObject);
 };
 
 const findAllBySolarSystem = async solarSystem => {
@@ -38,40 +43,9 @@ const aggregateMass = async solarSystem => {
         .next();
 };
 
-// const updateSolarObject = (id, project) => {
-//     assert.notEqual(mongo.db, null);
-//     const collection = mongo.db.collection(COLLECTION);
-//
-//     return new Promise((resolve, reject) => {
-//         const objID = new mongoClient.ObjectID(id);
-//         resolve(
-//             collection.updateOne(
-//                 { _id: objID, tenantId: project.tenantId },
-//                 {
-//                     $set: {
-//                         name: project.name,
-//                         status: project.status,
-//                         version: project.version,
-//                         files: project.files,
-//                     },
-//                 }
-//             )
-//         );
-//     });
-// };
-//
-// const deleteSolarObject = (id, tenantId) => {
-//     assert.notEqual(mongo.db, null);
-//     const collection = mongo.db.collection(COLLECTION);
-//
-//     return new Promise((resolve, reject) => {
-//         const objID = new mongoClient.ObjectID(id);
-//         resolve(collection.deleteOne({ _id: objID, tenantId: tenantId }));
-//     });
-// };
-
 module.exports = {
-    insert,
+    createPlanet,
+    updatePlanet,
     findAllBySolarSystem,
     findByName,
     findAllSolarSystems,

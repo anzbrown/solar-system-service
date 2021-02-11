@@ -3,6 +3,7 @@ const { validatePlanet, validateSatellite } = require('../util/validators');
 const {
     findAllBySolarSystem,
     findByName,
+    createPlanet,
 } = require('../repository/planetRepository');
 
 /**
@@ -28,7 +29,24 @@ const getPlanet = async (solarSystem, name) => {
     return planet ?? throwError(`No planet exists named: ${name}`, 404);
 };
 
-const addPlanet = async () => {};
+const addPlanet = async (solarSystem, planet) => {
+    try {
+        await validatePlanet(planet);
+        if (pascalCase(solarSystem) === pascalCase(planet.solarSystem)) {
+            // pascal case the solar system name for consistency
+            planet.solarSystem = pascalCase(planet.solarSystem);
+            await createPlanet(planet);
+        } else {
+            throwError(
+                'Request body solarSystem value does not match request path solar system value',
+                400
+            );
+        }
+    } catch (err) {
+        throwError(err.message, 400);
+    }
+};
+
 const updatePlanet = async () => {};
 
 module.exports = { getPlanets, getPlanet, addPlanet, updatePlanet };
