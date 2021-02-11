@@ -1,13 +1,16 @@
-const { capitalize } = require('../util/utils');
+const { capitalize, pascalCase } = require('../util/utils');
 const { validatePlanet, validateSatellite } = require('../util/validators');
-const { findAll, findByName } = require('../repository/planetRepository');
+const {
+    findAllBySolarSystem,
+    findByName,
+} = require('../repository/planetRepository');
 
 /**
  * get a list of all the planet information from MongoDB
  * @returns planets list
  */
-const getPlanets = async () => {
-    const planets = await findAll();
+const getPlanets = async solarSystem => {
+    const planets = await findAllBySolarSystem(pascalCase(solarSystem));
     return (
         Object.values(planets) ??
         throwError(`No planets exist in this solar system`, 404)
@@ -16,11 +19,12 @@ const getPlanets = async () => {
 
 /**
  * get information on a specific planet
+ * @param solarSystem
  * @param name of a specific planet to retrieve information on
  * @returns detailed information on specific planet
  */
-const getPlanet = async name => {
-    const planet = await findByName(capitalize(name));
+const getPlanet = async (solarSystem, name) => {
+    const planet = await findByName(pascalCase(solarSystem), capitalize(name));
     return planet ?? throwError(`No planet exists named: ${name}`, 404);
 };
 

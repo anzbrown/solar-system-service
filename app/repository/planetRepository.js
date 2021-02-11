@@ -13,16 +13,16 @@ const insert = async solarObject => {
     return collection.insertOne(solarObject);
 };
 
-const findAll = async () => {
+const findAllBySolarSystem = async solarSystem => {
     assert.notEqual(mongo.db, null);
     const collection = mongo.db.collection(COLLECTION);
-    return await collection.find().toArray();
+    return await collection.find({ solarSystem: solarSystem }).toArray();
 };
 
-const findByName = async name => {
+const findByName = async (solarSystem, name) => {
     assert.notEqual(mongo.db, null);
     const collection = mongo.db.collection(COLLECTION);
-    return await collection.findOne({ name: name });
+    return await collection.findOne({ solarSystem: solarSystem, name: name });
 };
 
 // const updateSolarObject = (id, project) => {
@@ -59,6 +59,6 @@ const findByName = async name => {
 
 module.exports = {
     insert,
-    findAll,
+    findAllBySolarSystem,
     findByName,
 };

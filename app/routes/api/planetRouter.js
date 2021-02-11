@@ -7,11 +7,12 @@ const {
 } = require('../../service/planetService');
 
 const planetRouter = express.Router();
-const planetPath = '/planets';
+const planetPath = '/:solarSystem/planets';
 
 planetRouter.get(planetPath, async (req, res, next) => {
     try {
-        const planets = await getPlanets();
+        const { solarSystem } = req.params;
+        const planets = await getPlanets(solarSystem);
         res.send(planets);
     } catch (error) {
         next(error);
@@ -19,7 +20,8 @@ planetRouter.get(planetPath, async (req, res, next) => {
 });
 planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
     try {
-        const planet = await getPlanet(req.params.name);
+        const { solarSystem } = req.params;
+        const planet = await getPlanet(solarSystem, req.params.name);
         res.send(planet);
     } catch (error) {
         next(error);
@@ -27,6 +29,7 @@ planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
 });
 planetRouter.post(planetPath, async (req, res, next) => {
     try {
+        const { solarSystem } = req.params;
         const planet = req.body;
         await addPlanet(planet);
         res.send(planet);
@@ -36,6 +39,7 @@ planetRouter.post(planetPath, async (req, res, next) => {
 });
 planetRouter.put(planetPath, async (req, res, next) => {
     try {
+        const { solarSystem } = req.params;
         const planet = req.body;
         await updatePlanet(planet);
         res.send(planet);

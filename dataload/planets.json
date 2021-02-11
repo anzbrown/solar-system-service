@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Mercury",
+    "solarSystem": "Milky Way",
     "mass": 0.33,
     "diameter": 4879,
     "density": 5427,
@@ -26,6 +27,7 @@
   {
     "id": 2,
     "name": "Venus",
+    "solarSystem": "Milky Way",
     "mass": 4.87,
     "diameter": 12104,
     "density": 5243,
@@ -50,6 +52,7 @@
   {
     "id": 3,
     "name": "Earth",
+    "solarSystem": "Milky Way",
     "mass": 5.97,
     "diameter": 12756,
     "density": 5514,
@@ -74,6 +77,7 @@
   {
     "id": 4,
     "name": "Mars",
+    "solarSystem": "Milky Way",
     "mass": 0.642,
     "diameter": 6792,
     "density": 3933,
@@ -98,6 +102,7 @@
   {
     "id": 5,
     "name": "Jupiter",
+    "solarSystem": "Milky Way",
     "mass": 1898,
     "diameter": 142984,
     "density": 1326,
@@ -122,6 +127,7 @@
   {
     "id": 6,
     "name": "Saturn",
+    "solarSystem": "Milky Way",
     "mass": 568,
     "diameter": 120536,
     "density": 687,
@@ -146,6 +152,7 @@
   {
     "id": 7,
     "name": "Uranus",
+    "solarSystem": "Milky Way",
     "mass": 86.8,
     "diameter": 51118,
     "density": 1271,
@@ -170,6 +177,7 @@
   {
     "id": 8,
     "name": "Neptune",
+    "solarSystem": "Milky Way",
     "mass": 102,
     "diameter": 49528,
     "density": 1638,
@@ -194,6 +202,7 @@
   {
     "id": 9,
     "name": "Pluto",
+    "solarSystem": "Milky Way",
     "mass": 0.0146,
     "diameter": 2370,
     "density": 2095,
