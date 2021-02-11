@@ -5,10 +5,11 @@ const { helm, corsOptions } = require('./config/securitySettings');
 const { errorHandler } = require('./routes/middleware/errorHandler');
 const { healthRouter } = require('./routes/api/healthRouter');
 const { planetRouter } = require('./routes/api/planetRouter');
+const { solarSystemRouter } = require('./routes/api/solarSystemRouter');
 
 const app = () => {
     const expressApi = express();
-    const baseApiRoute = '/api';
+    const baseApiRoute = '/api/solarsystems';
 
     // enable CORS for testing
     expressApi.use(helm);
@@ -20,6 +21,7 @@ const app = () => {
     // Unauthenticated routes
     expressApi.use(baseApiRoute, healthRouter);
     expressApi.use(baseApiRoute, planetRouter);
+    expressApi.use(baseApiRoute, solarSystemRouter);
 
     // error handler
     expressApi.use((error, req, res, next) =>

@@ -20,8 +20,8 @@ planetRouter.get(planetPath, async (req, res, next) => {
 });
 planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
     try {
-        const { solarSystem } = req.params;
-        const planet = await getPlanet(solarSystem, req.params.name);
+        const { solarSystem, name } = req.params;
+        const planet = await getPlanet(solarSystem, name);
         res.send(planet);
     } catch (error) {
         next(error);

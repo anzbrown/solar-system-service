@@ -1,4 +1,4 @@
-const { capitalize, pascalCase } = require('../util/utils');
+const { capitalize, pascalCase, throwError } = require('../util/utils');
 const { validatePlanet, validateSatellite } = require('../util/validators');
 const {
     findAllBySolarSystem,
@@ -30,11 +30,5 @@ const getPlanet = async (solarSystem, name) => {
 
 const addPlanet = async () => {};
 const updatePlanet = async () => {};
-
-const throwError = (message, status) => {
-    const error = new Error(message);
-    error.status = status;
-    throw error;
-};
 
 module.exports = { getPlanets, getPlanet, addPlanet, updatePlanet };

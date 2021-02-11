@@ -16,7 +16,14 @@ const pascalCase = string =>
         m => m.charAt(0).toUpperCase() + m.slice(1).toLowerCase()
     );
 
+const throwError = (message, status) => {
+    const error = new Error(message);
+    error.status = status;
+    throw error;
+};
+
 module.exports = {
     capitalize,
     pascalCase,
+    throwError,
 };

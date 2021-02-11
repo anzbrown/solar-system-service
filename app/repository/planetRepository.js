@@ -1,28 +1,41 @@
 const assert = require('assert');
 const { mongo } = require('../config/mongo');
-const { logger } = require('../util/logger');
 const COLLECTION = 'planets';
 
+const loadCollection = () => {
+    assert.notEqual(mongo.db, null);
+    return mongo.db.collection(COLLECTION);
+};
+
 const insert = async solarObject => {
-    assert.notEqual(mongo.db.connection, null);
-    const collection = mongo.db.connection.collection(COLLECTION);
-    logger.debug(
-        `Persisting document into collection = ${COLLECTION}`,
-        COLLECTION
-    );
+    const collection = loadCollection();
     return collection.insertOne(solarObject);
 };
 
 const findAllBySolarSystem = async solarSystem => {
-    assert.notEqual(mongo.db, null);
-    const collection = mongo.db.collection(COLLECTION);
+    const collection = loadCollection();
     return await collection.find({ solarSystem: solarSystem }).toArray();
 };
 
 const findByName = async (solarSystem, name) => {
-    assert.notEqual(mongo.db, null);
-    const collection = mongo.db.collection(COLLECTION);
+    const collection = loadCollection();
     return await collection.findOne({ solarSystem: solarSystem, name: name });
+};
+
+const findAllSolarSystems = async () => {
+    const collection = loadCollection();
+    return await collection.distinct('solarSystem');
+};
+
+const aggregateMass = async solarSystem => {
+    const collection = loadCollection();
+    return await collection
+        .aggregate([
+            { $match: { solarSystem: solarSystem } },
+            { $project: { _id: 0, mass: 1, solarSystem: 1 } },
+            { $group: { _id: '$solarSystem', totalMass: { $sum: '$mass' } } },
+        ])
+        .next();
 };
 
 // const updateSolarObject = (id, project) => {
@@ -61,4 +74,6 @@ module.exports = {
     insert,
     findAllBySolarSystem,
     findByName,
+    findAllSolarSystems,
+    aggregateMass,
 };
