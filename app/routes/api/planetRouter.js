@@ -39,7 +39,6 @@ planetRouter.post(planetPath, async (req, res, next) => {
 });
 planetRouter.put(planetPath, async (req, res, next) => {
     try {
-        const { solarSystem } = req.params;
         const planet = req.body;
         await updatePlanet(planet);
         res.send(planet);

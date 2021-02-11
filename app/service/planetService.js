@@ -1,5 +1,5 @@
 const { capitalize, pascalCase, throwError } = require('../util/utils');
-const { validatePlanet, validateSatellite } = require('../util/validators');
+const { validatePlanet } = require('../util/validators');
 const {
     findAllBySolarSystem,
     findByName,

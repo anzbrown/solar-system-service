@@ -1,8 +1,5 @@
 const express = require('express');
-const {
-    getSolarSystems,
-    getSolarSystem,
-} = require('../../service/solarSystemService');
+const { getSolarSystems } = require('../../service/solarSystemService');
 
 const solarSystemRouter = express.Router();
 const solarSystemPath = '/';
