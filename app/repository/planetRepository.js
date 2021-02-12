@@ -41,7 +41,10 @@ const findAllBySolarSystem = async solarSystem => {
 
 const findByName = async (solarSystem, name) => {
     const collection = loadCollection();
-    return await collection.findOne({ solarSystem: solarSystem, name: name });
+    return await collection.findOne(
+        { solarSystem: solarSystem, name: name },
+        { projection: { _id: 0, id: 0 } }
+    );
 };
 
 const findAllSolarSystems = async () => {

@@ -12,10 +12,9 @@ const {
  */
 const getPlanets = async solarSystem => {
     const planets = await findAllBySolarSystem(pascalCase(solarSystem));
-    return (
-        Object.values(planets) ??
-        throwError('No planets exist in this solar system', 404)
-    );
+    return planets?.length > 0
+        ? planets
+        : throwError(`No planets exist in: ${solarSystem}`, 404);
 };
 
 /**
@@ -26,7 +25,10 @@ const getPlanets = async solarSystem => {
  */
 const getPlanet = async (solarSystem, name) => {
     const planet = await findByName(pascalCase(solarSystem), capitalize(name));
-    return planet ?? throwError(`No planet exists named: ${name}`, 404);
+    return (
+        planet ??
+        throwError(`No planet exists named: ${name} in ${solarSystem}`, 404)
+    );
 };
 
 /**
