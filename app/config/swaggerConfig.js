@@ -19,7 +19,7 @@ const swaggerDefinition = {
         },
         servers: [
             {
-                url: `http://localhost:8080/api/solarsystems`,
+                url: 'http://localhost:8080/api/solarsystems',
                 description: 'Development server',
             },
         ],

@@ -7,11 +7,13 @@ const expectedSolarSystems = ['Milky Way'];
 const expectedAggregate = {
     _id: 'Milky Way',
     totalMass: 5339.2232,
+    numberOfPlanets: 10,
 };
 const expectedSolarSummary = [
     {
         name: 'Milky Way',
         totalMass: 5339.2232,
+        numberOfPlanets: 10,
     },
 ];
 
@@ -20,7 +22,7 @@ describe('getSolarSystems', () => {
         jest.spyOn(planetRepository, 'findAllSolarSystems').mockImplementation(
             () => expectedSolarSystems
         );
-        jest.spyOn(planetRepository, 'aggregateMass').mockImplementation(
+        jest.spyOn(planetRepository, 'aggregatePlanets').mockImplementation(
             () => expectedAggregate
         );
         const result = await getSolarSystems();
