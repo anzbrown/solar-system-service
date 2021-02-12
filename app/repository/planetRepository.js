@@ -1,7 +1,10 @@
 const { throwError } = require('../util/utils');
-const { mongo } = require('../config/mongo');
-const COLLECTION = 'planets';
+const { mongo, COLLECTION } = require('../config/mongo');
 
+/**
+ * ensure that an active connection is available, otherwise throw an internal server error
+ * @returns {*|void}
+ */
 const loadCollection = () => {
     return (
         mongo.db?.collection(COLLECTION) ?? throwError('Database errors.', 500)
@@ -44,13 +47,28 @@ const findAllSolarSystems = async () => {
     return await collection.distinct('solarSystem');
 };
 
-const aggregateMass = async solarSystem => {
+/**
+ * aggregate the planets in a solar system
+ * returns a value of the total mass of each planet and a count of the number of planets
+ * @param solarSystem to retrieve the aggregate data for
+ * @returns {Promise<*>}
+ */
+const aggregatePlanets = async solarSystem => {
     const collection = loadCollection();
     return await collection
         .aggregate([
+            // filter the document by the solarSystem field
             { $match: { solarSystem: solarSystem } },
+            // extract only the mass, and solarSystem value to limit data retrieval
             { $project: { _id: 0, mass: 1, solarSystem: 1 } },
-            { $group: { _id: '$solarSystem', totalMass: { $sum: '$mass' } } },
+            // group by the solarSystem value, calculate sum of mass values, count the number of planets
+            {
+                $group: {
+                    _id: '$solarSystem',
+                    totalMass: { $sum: '$mass' },
+                    numberOfPlanets: { $sum: 1 },
+                },
+            },
         ])
         .next();
 };
@@ -61,5 +79,5 @@ module.exports = {
     findAllBySolarSystem,
     findByName,
     findAllSolarSystems,
-    aggregateMass,
+    aggregatePlanets,
 };

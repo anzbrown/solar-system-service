@@ -1,6 +1,6 @@
 const { app } = require('./app');
 const { mongo } = require('./config/mongo');
-const { logger } = require('./util/logger');
+const { logger } = require('./config/logger');
 
 const port = process.env.PORT || 8080;
 const application = app();

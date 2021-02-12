@@ -1,7 +1,7 @@
 const { throwError } = require('../util/utils');
 const {
     findAllSolarSystems,
-    aggregateMass,
+    aggregatePlanets,
 } = require('../repository/planetRepository');
 
 /**
@@ -16,10 +16,11 @@ const getSolarSystems = async () => {
     } else {
         const systems = [];
         for (const solarSystem of solarSystems) {
-            const mass = await aggregateMass(solarSystem);
+            const planets = await aggregatePlanets(solarSystem);
             systems.push({
                 name: solarSystem,
-                totalMass: mass.totalMass,
+                totalMass: planets.totalMass,
+                numberOfPlanets: planets.numberOfPlanets,
             });
         }
         return systems;
