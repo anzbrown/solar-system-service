@@ -43,17 +43,10 @@ const getPlanet = async (solarSystem, name) => {
  */
 const updatePlanet = async (solarSystem, planet) => {
     try {
+        // pascal case the solar system name for consistency
+        planet.solarSystem = pascalCase(solarSystem);
         await validatePlanet(planet);
-        if (pascalCase(solarSystem) === pascalCase(planet.solarSystem)) {
-            // pascal case the solar system name for consistency
-            planet.solarSystem = pascalCase(planet.solarSystem);
-            await createPlanet(planet);
-        } else {
-            throwError(
-                'Request body solarSystem value does not match request path solar system value',
-                400
-            );
-        }
+        await createPlanet(planet);
     } catch (err) {
         throwError(err.message, 400);
     }

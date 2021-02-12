@@ -148,6 +148,172 @@ planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
     }
 });
 
+/**
+ * @swagger
+ * /{solarSystem}/planets:
+ *   post:
+ *     summary: Create new or Update existing planetary information
+ *     description: If a planet does not exist with a specific name and solar system
+ *      value, then a new planet is created with the provided values.
+ *      If the planet does exist with the same name and solar system values, then its values are
+ *      replaced with the new values from the request body.
+ *     parameters:
+ *       - in: path
+ *         name: solarSystem
+ *         required: true
+ *         description: The name of the solar system the planet exists within.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: New Earth
+ *               mass:
+ *                 type: number
+ *                 example: 5.97
+ *               diameter:
+ *                 type: number
+ *                 example: 12756
+ *               density:
+ *                 type: number
+ *                 example: 5514
+ *               gravity:
+ *                 type: number
+ *                 example: 9.8
+ *               escapeVelocity:
+ *                 type: number
+ *                 example: 11.2
+ *               rotationPeriod:
+ *                 type: number
+ *                 example: 23.9
+ *               lengthOfDay:
+ *                 type: number
+ *                 example: 24
+ *               distanceFromSun:
+ *                 type: number
+ *                 example: 149.6
+ *               perihelion:
+ *                 type: number
+ *                 example: 147.
+ *               aphelion:
+ *                 type: number
+ *                 example: 152.1
+ *               orbitalPeriod:
+ *                 type: number
+ *                 example: 365.2
+ *               orbitalVelocity:
+ *                 type: number
+ *                 example: 29.8
+ *               orbitalInclination:
+ *                 type: number
+ *                 example: 0
+ *               orbitalEccentricity:
+ *                 type: number
+ *                 example: 0.017
+ *               obliquityToOrbit:
+ *                 type: number
+ *                 example: 23.4
+ *               meanTemperature:
+ *                 type: number
+ *                 example: 15
+ *               surfacePressure:
+ *                 type: number
+ *                 example: 1
+ *               numberOfMoons:
+ *                 type: number
+ *                 example: 1
+ *               hasRingSystem:
+ *                 type: boolean
+ *                 example: true
+ *               hasGlobalMagneticField:
+ *                 type: boolean
+ *                 example: false
+ *
+ *     responses:
+ *       "201":
+ *         description: A planet has been successfully created or updated with
+ *          the planetary information provided in the request.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   example: New Earth
+ *                 solarSystem:
+ *                   type: string
+ *                   example: Andromeda
+ *                 mass:
+ *                   type: number
+ *                   example: 5.97
+ *                 diameter:
+ *                   type: number
+ *                   example: 12756
+ *                 density:
+ *                   type: number
+ *                   example: 5514
+ *                 gravity:
+ *                   type: number
+ *                   example: 9.8
+ *                 escapeVelocity:
+ *                   type: number
+ *                   example: 11.2
+ *                 rotationPeriod:
+ *                   type: number
+ *                   example: 23.9
+ *                 lengthOfDay:
+ *                   type: number
+ *                   example: 24
+ *                 distanceFromSun:
+ *                   type: number
+ *                   example: 149.6
+ *                 perihelion:
+ *                   type: number
+ *                   example: 147.
+ *                 aphelion:
+ *                   type: number
+ *                   example: 152.1
+ *                 orbitalPeriod:
+ *                   type: number
+ *                   example: 365.2
+ *                 orbitalVelocity:
+ *                   type: number
+ *                   example: 29.8
+ *                 orbitalInclination:
+ *                   type: number
+ *                   example: 0
+ *                 orbitalEccentricity:
+ *                   type: number
+ *                   example: 0.017
+ *                 obliquityToOrbit:
+ *                   type: number
+ *                   example: 23.4
+ *                 meanTemperature:
+ *                   type: number
+ *                   example: 15
+ *                 surfacePressure:
+ *                   type: number
+ *                   example: 1
+ *                 numberOfMoons:
+ *                   type: number
+ *                   example: 1
+ *                 hasRingSystem:
+ *                   type: boolean
+ *                   example: true
+ *                 hasGlobalMagneticField:
+ *                   type: boolean
+ *                   example: false
+ *
+ *       "500":
+ *         description: An internal error has occurred. Likely a loss of database connection.
+ */
 planetRouter.post(planetPath, async (req, res, next) => {
     try {
         const { solarSystem } = req.params;
