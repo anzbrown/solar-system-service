@@ -11,6 +11,7 @@ const solarSystemPath = '/';
  *     summary: get a summary of solar systems
  *     description: Return a list of solar systems including their name, total
  *      mass of planets, and the number of planets in each system.
+ *
  *     responses:
  *       "200":
  *         description: A successful solar system response

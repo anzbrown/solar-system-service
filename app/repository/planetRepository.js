@@ -34,7 +34,9 @@ const updatePlanet = async solarObject => {
 
 const findAllBySolarSystem = async solarSystem => {
     const collection = loadCollection();
-    return await collection.find({ solarSystem: solarSystem }).toArray();
+    return await collection
+        .find({ solarSystem: solarSystem }, { projection: { name: 1, _id: 0 } })
+        .toArray();
 };
 
 const findByName = async (solarSystem, name) => {
