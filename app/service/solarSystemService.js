@@ -12,7 +12,7 @@ const {
 const getSolarSystems = async () => {
     const solarSystems = await findAllSolarSystems();
     if (!solarSystems) {
-        throwError(`No solar systems exist anywhere...`, 404);
+        throwError('No solar systems exist anywhere...', 404);
     } else {
         const systems = [];
         for (const solarSystem of solarSystems) {

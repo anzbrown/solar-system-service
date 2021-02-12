@@ -2,7 +2,6 @@ const express = require('express');
 const {
     getPlanets,
     getPlanet,
-    addPlanet,
     updatePlanet,
 } = require('../../service/planetService');
 
@@ -31,7 +30,7 @@ planetRouter.post(planetPath, async (req, res, next) => {
     try {
         const { solarSystem } = req.params;
         const planet = req.body;
-        await addPlanet(solarSystem, planet);
+        await updatePlanet(solarSystem, planet);
         res.send(planet);
     } catch (error) {
         next(error);

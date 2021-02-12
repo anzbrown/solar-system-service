@@ -14,7 +14,7 @@ const getPlanets = async solarSystem => {
     const planets = await findAllBySolarSystem(pascalCase(solarSystem));
     return (
         Object.values(planets) ??
-        throwError(`No planets exist in this solar system`, 404)
+        throwError('No planets exist in this solar system', 404)
     );
 };
 
@@ -39,7 +39,7 @@ const getPlanet = async (solarSystem, name) => {
  * @param planet the new planet being created
  * @returns {Promise<void>}
  */
-const addPlanet = async (solarSystem, planet) => {
+const updatePlanet = async (solarSystem, planet) => {
     try {
         await validatePlanet(planet);
         if (pascalCase(solarSystem) === pascalCase(planet.solarSystem)) {
@@ -57,4 +57,4 @@ const addPlanet = async (solarSystem, planet) => {
     }
 };
 
-module.exports = { getPlanets, getPlanet, addPlanet };
+module.exports = { getPlanets, getPlanet, updatePlanet };

@@ -1,28 +1,29 @@
 {
   "name": "solar-system-service",
   "version": "1.0.0",
-  "description": "Express API with Postgres DB to manage solar system information",
+  "description": "Express API with MongoDB to manage solar system information",
   "main": "app/index.js",
   "author": "Adam Brown",
-  "license": "",
+  "license": "MIT",
   "engines": {
-    "node": "14.x.x"
+    "node": ">14.x.x"
   },
   "dependencies": {
-    "assert": "^2.0.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-brute": "^1.0.1",
     "helmet": "^4.3.1",
     "joi": "^17.3.0",
     "mongodb": "^3.6.4",
+    "swagger-jsdoc": "^6.0.2",
+    "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "@jest/globals": "^26.6.2",
     "babel-eslint": "^10.1.0",
+    "depcheck": "^1.3.1",
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -31,6 +32,7 @@
     "prettier": "^2.1.1"
   },
   "scripts": {
+    "prelint": "npx depcheck",
     "lint": "eslint --fix .",
     "test": "jest",
     "start": "node app/index.js",
