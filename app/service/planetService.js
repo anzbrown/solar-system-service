@@ -7,15 +7,11 @@ const {
 } = require('../repository/planetRepository');
 
 /**
- * get a list of all the planet information from MongoDB
+ * get a list of all the planets in a solar system
  * @returns planets list
  */
-const getPlanets = async solarSystem => {
-    const planets = await findAllBySolarSystem(pascalCase(solarSystem));
-    return planets?.length > 0
-        ? planets
-        : throwError(`No planets exist in: ${solarSystem}`, 404);
-};
+const getPlanets = async solarSystem =>
+    await findAllBySolarSystem(pascalCase(solarSystem));
 
 /**
  * get information on a specific planet
@@ -23,13 +19,8 @@ const getPlanets = async solarSystem => {
  * @param name of a specific planet to retrieve information on
  * @returns detailed information on specific planet
  */
-const getPlanet = async (solarSystem, name) => {
-    const planet = await findByName(pascalCase(solarSystem), capitalize(name));
-    return (
-        planet ??
-        throwError(`No planet exists named: ${name} in ${solarSystem}`, 404)
-    );
-};
+const getPlanet = async (solarSystem, name) =>
+    await findByName(pascalCase(solarSystem), capitalize(name));
 
 /**
  * functions as the Create new planet and Update existing planet method
@@ -46,7 +37,7 @@ const updatePlanet = async (solarSystem, planet) => {
         // pascal case the solar system name for consistency
         planet.solarSystem = pascalCase(solarSystem);
         await validatePlanet(planet);
-        await createPlanet(planet);
+        return await createPlanet(planet);
     } catch (err) {
         throwError(err.message, 400);
     }

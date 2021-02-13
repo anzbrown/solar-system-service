@@ -50,14 +50,19 @@ const planetPath = '/:solarSystem/planets';
  *                 message:
  *                   type: string
  *                   description: The info message that no planets exist in this solar system
- *                   example: No planets exist in Milky Way2
+ *                   example: No planets exist in MilkyWay
  *       "500":
  *         description: An internal error has occurred. Likely a loss of database connection.
  */
 planetRouter.get(planetPath, async (req, res, next) => {
     try {
         const { solarSystem } = req.params;
-        res.send(await getPlanets(solarSystem));
+        const planets = await getPlanets(solarSystem);
+        return planets?.length > 0
+            ? res.send(planets)
+            : res.status(404).send({
+                  message: `No planets exist in: ${solarSystem}`,
+              });
     } catch (error) {
         next(error);
     }
@@ -135,14 +140,19 @@ planetRouter.get(planetPath, async (req, res, next) => {
  *                 message:
  *                   type: string
  *                   description: The info message that no planets exist in this solar system
- *                   example: No planets exist in Milky Way2
+ *                   example: No planet exists named Electric Boogaloo in Andromeda
  *       "500":
  *         description: An internal error has occurred. Likely a loss of database connection.
  */
 planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
     try {
         const { solarSystem, name } = req.params;
-        res.send(await getPlanet(solarSystem, name));
+        const planet = await getPlanet(solarSystem, name);
+        return planet
+            ? res.send(planet)
+            : res.status(404).send({
+                  message: `No planet exists named: ${name} in ${solarSystem}`,
+              });
     } catch (error) {
         next(error);
     }
