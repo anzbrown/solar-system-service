@@ -5,7 +5,7 @@ const cors = require('cors');
  * CORS configuration for webapp
  */
 const corsOptions = cors({
-    origin: ['localhost'],
+    origin: ['*'],
 });
 
 /**
