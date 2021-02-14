@@ -5,10 +5,7 @@ const mongo = { connection: null };
 const DB_NAME = 'solar_objects';
 const COLLECTION = 'planets';
 
-mongo.connect = async (
-    url = 'mongodb://172.18.0.2:27017',
-    dbName = DB_NAME
-) => {
+mongo.connect = async (url = 'mongodb://mongodb:27017', dbName = DB_NAME) => {
     const connectionOptions = {
         useNewUrlParser: true,
         useUnifiedTopology: true,

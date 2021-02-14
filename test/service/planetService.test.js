@@ -1,4 +1,3 @@
-const { describe, expect, test } = require('@jest/globals');
 const planetRepository = require('../../app/repository/planetRepository');
 const validators = require('../../app/util/validators');
 const {
@@ -103,7 +102,12 @@ describe('updatePlanet', () => {
     beforeEach(() => jest.clearAllMocks());
 
     describe('valid planet', () => {
-        let expectedPlanet, updatedPlanet;
+        let updatedPlanet,
+            newPlanet,
+            expectedUpdatedPlanet,
+            expectedNewPlanet,
+            inserted,
+            updated;
         beforeEach(() => {
             jest.clearAllMocks();
             beforeEach(() => jest.clearAllMocks());
@@ -131,9 +135,9 @@ describe('updatePlanet', () => {
                 hasRingSystem: false,
                 hasGlobalMagneticField: false,
             };
-            expectedPlanet = {
-                name: 'Earth',
-                solarSystem: 'Milky Way',
+            newPlanet = {
+                name: 'New Earth',
+                solarSystem: 'Andromeda',
                 mass: 6.66,
                 diameter: 987654,
                 density: 5514,
@@ -155,10 +159,74 @@ describe('updatePlanet', () => {
                 hasRingSystem: false,
                 hasGlobalMagneticField: false,
             };
+            inserted = {
+                result: {
+                    n: 1,
+                    nModified: 0,
+                },
+            };
+            updated = {
+                result: {
+                    n: 1,
+                    nModified: 1,
+                },
+            };
+            expectedUpdatedPlanet = {
+                updatedPlanet: {
+                    name: 'Earth',
+                    solarSystem: 'Milky Way',
+                    mass: 6.66,
+                    diameter: 987654,
+                    density: 5514,
+                    gravity: 9.8,
+                    escapeVelocity: 11.2,
+                    rotationPeriod: 23.9,
+                    lengthOfDay: 24,
+                    distanceFromSun: 149.6,
+                    perihelion: 147.1,
+                    aphelion: 152.1,
+                    orbitalPeriod: 365.2,
+                    orbitalVelocity: 29.8,
+                    orbitalInclination: 0,
+                    orbitalEccentricity: 0.017,
+                    obliquityToOrbit: 23.4,
+                    meanTemperature: 15,
+                    surfacePressure: 1,
+                    numberOfMoons: 1,
+                    hasRingSystem: false,
+                    hasGlobalMagneticField: false,
+                },
+                updated: 1,
+            };
+            expectedNewPlanet = {
+                updatedPlanet: {
+                    name: 'New Earth',
+                    solarSystem: 'Andromeda',
+                    mass: 6.66,
+                    diameter: 987654,
+                    density: 5514,
+                    gravity: 9.8,
+                    escapeVelocity: 11.2,
+                    rotationPeriod: 23.9,
+                    lengthOfDay: 24,
+                    distanceFromSun: 149.6,
+                    perihelion: 147.1,
+                    aphelion: 152.1,
+                    orbitalPeriod: 365.2,
+                    orbitalVelocity: 29.8,
+                    orbitalInclination: 0,
+                    orbitalEccentricity: 0.017,
+                    obliquityToOrbit: 23.4,
+                    meanTemperature: 15,
+                    surfacePressure: 1,
+                    numberOfMoons: 1,
+                    hasRingSystem: false,
+                    hasGlobalMagneticField: false,
+                },
+                updated: 0,
+            };
             validators.validatePlanet = jest.fn(() => true);
-            planetRepository.createPlanet.mockImplementation(
-                () => expectedPlanet
-            );
+            planetRepository.createPlanet.mockImplementation(() => inserted);
         });
         test('should not throw any exceptions for a valid planet object', async () => {
             validators.validatePlanet = jest.fn(() => true);
@@ -179,8 +247,13 @@ describe('updatePlanet', () => {
             }
         });
         test('should update and return the updated planet information', async () => {
+            planetRepository.createPlanet.mockImplementation(() => updated);
             const result = await updatePlanet('milky way', updatedPlanet);
-            expect(result).toEqual(expectedPlanet);
+            expect(result).toEqual(expectedUpdatedPlanet);
+        });
+        test('should create and return the updated planet information', async () => {
+            const result = await updatePlanet('Andromeda', newPlanet);
+            expect(result).toEqual(expectedNewPlanet);
         });
     });
 });

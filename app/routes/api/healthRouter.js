@@ -28,6 +28,4 @@ healthRouter.get(healthPath, async (_req, res) => {
     const healthy = { status: 'UP' };
     res.send(healthy);
 });
-module.exports = {
-    healthRouter,
-};
+module.exports = healthRouter;

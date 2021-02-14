@@ -30,14 +30,19 @@ const getPlanet = async (solarSystem, name) =>
  * values are replaced with the new values from the request body
  * @param solarSystem to create the new planet in
  * @param planet the new planet being created
- * @returns {Promise<void>}
+ * @returns {Promise<{updatedPlanet, updated: (number|*|null|Number)}>}
  */
 const updatePlanet = async (solarSystem, planet) => {
     try {
         // pascal case the solar system name for consistency
         planet.solarSystem = pascalCase(solarSystem);
         await validatePlanet(planet);
-        return await createPlanet(planet);
+        const inserted = await createPlanet(planet);
+        // report whether a new planet was inserted or updated using the results from the repository
+        return {
+            updatedPlanet: planet,
+            updated: inserted.result.n && inserted.result.nModified,
+        };
     } catch (err) {
         throwError(err.message, 400);
     }

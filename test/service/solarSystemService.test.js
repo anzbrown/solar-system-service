@@ -1,4 +1,3 @@
-const { describe, expect, test } = require('@jest/globals');
 const planetRepository = require('../../app/repository/planetRepository');
 const { getSolarSystems } = require('../../app/service/solarSystemService');
 jest.mock('../../app/repository/planetRepository');

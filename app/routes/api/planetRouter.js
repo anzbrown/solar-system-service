@@ -247,8 +247,8 @@ planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
  *
  *     responses:
  *       "201":
- *         description: A planet has been successfully created or updated with
- *          the planetary information provided in the request.
+ *         description: A new planet has been successfully created in the solar system
+ *          with provided in the path wih the planetary information provided in the request body.
  *         content:
  *           application/json:
  *             schema:
@@ -320,7 +320,81 @@ planetRouter.get(`${planetPath}/:name`, async (req, res, next) => {
  *                 hasGlobalMagneticField:
  *                   type: boolean
  *                   example: false
- *
+ *       "200":
+ *         description: An existing planet has been successfully updated in the solar system
+ *          with provided in the path wih the updated planetary information provided
+ *          in the request body.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   example: New Earth
+ *                 solarSystem:
+ *                   type: string
+ *                   example: Andromeda
+ *                 mass:
+ *                   type: number
+ *                   example: 5.97
+ *                 diameter:
+ *                   type: number
+ *                   example: 12756
+ *                 density:
+ *                   type: number
+ *                   example: 5514
+ *                 gravity:
+ *                   type: number
+ *                   example: 9.8
+ *                 escapeVelocity:
+ *                   type: number
+ *                   example: 11.2
+ *                 rotationPeriod:
+ *                   type: number
+ *                   example: 23.9
+ *                 lengthOfDay:
+ *                   type: number
+ *                   example: 24
+ *                 distanceFromSun:
+ *                   type: number
+ *                   example: 149.6
+ *                 perihelion:
+ *                   type: number
+ *                   example: 147.
+ *                 aphelion:
+ *                   type: number
+ *                   example: 152.1
+ *                 orbitalPeriod:
+ *                   type: number
+ *                   example: 365.2
+ *                 orbitalVelocity:
+ *                   type: number
+ *                   example: 29.8
+ *                 orbitalInclination:
+ *                   type: number
+ *                   example: 0
+ *                 orbitalEccentricity:
+ *                   type: number
+ *                   example: 0.017
+ *                 obliquityToOrbit:
+ *                   type: number
+ *                   example: 23.4
+ *                 meanTemperature:
+ *                   type: number
+ *                   example: 15
+ *                 surfacePressure:
+ *                   type: number
+ *                   example: 1
+ *                 numberOfMoons:
+ *                   type: number
+ *                   example: 1
+ *                 hasRingSystem:
+ *                   type: boolean
+ *                   example: true
+ *                 hasGlobalMagneticField:
+ *                   type: boolean
+ *                   example: false
  *       "500":
  *         description: An internal error has occurred. Likely a loss of database connection.
  */
@@ -328,12 +402,12 @@ planetRouter.post(planetPath, async (req, res, next) => {
     try {
         const { solarSystem } = req.params;
         const planet = req.body;
-        await updatePlanet(solarSystem, planet);
-        res.status(201).send(planet);
+        const updatedPlanet = await updatePlanet(solarSystem, planet);
+        return updatedPlanet.updated
+            ? res.status(200).send(updatedPlanet.updatedPlanet)
+            : res.status(201).send(updatedPlanet.updatedPlanet);
     } catch (error) {
         next(error);
     }
 });
-module.exports = {
-    planetRouter,
-};
+module.exports = planetRouter;

@@ -45,6 +45,4 @@ solarSystemRouter.get(solarSystemPath, async (req, res, next) => {
         next(error);
     }
 });
-module.exports = {
-    solarSystemRouter,
-};
+module.exports = solarSystemRouter;

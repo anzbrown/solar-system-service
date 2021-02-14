@@ -27,11 +27,6 @@ const createPlanet = async solarObject => {
     );
 };
 
-const updatePlanet = async solarObject => {
-    const collection = loadCollection();
-    return await collection.updateOne(solarObject);
-};
-
 const findAllBySolarSystem = async solarSystem => {
     const collection = loadCollection();
     return await collection
@@ -80,7 +75,6 @@ const aggregatePlanets = async solarSystem => {
 
 module.exports = {
     createPlanet,
-    updatePlanet,
     findAllBySolarSystem,
     findByName,
     findAllSolarSystems,

@@ -2,12 +2,12 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const { swaggerSpecification } = require('./config/swaggerConfig');
+const swaggerSpecification = require('./config/swaggerConfig');
 const { helm, corsOptions } = require('./config/securitySettings');
-const { errorHandler } = require('./routes/middleware/errorHandler');
-const { healthRouter } = require('./routes/api/healthRouter');
-const { planetRouter } = require('./routes/api/planetRouter');
-const { solarSystemRouter } = require('./routes/api/solarSystemRouter');
+const errorHandler = require('./routes/middleware/errorHandler');
+const healthRouter = require('./routes/api/healthRouter');
+const planetRouter = require('./routes/api/planetRouter');
+const solarSystemRouter = require('./routes/api/solarSystemRouter');
 
 const app = () => {
     const expressApi = express();
