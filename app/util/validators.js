@@ -25,29 +25,12 @@ const planetSchema = Joi.object({
     hasGlobalMagneticField: Joi.boolean().required(),
 });
 
-const satelliteSchema = Joi.object({
-    planetId: Joi.number().required(),
-    name: Joi.string().alphanum().required(),
-    gm: Joi.number().required(),
-    radius: Joi.number().required(),
-    density: Joi.number().required(),
-    magnitude: Joi.number().required(),
-    albedo: Joi.number().required(),
-});
-
 /**
  * validate the new planet to ensure they meet the required schema
  * @param planet - the new planet to add to a solar system
  * @returns {Promise<any>}
  */
-const validatePlanet = async planet => planetSchema.validateAsync(planet);
+const validatePlanet = async planet =>
+    await planetSchema.validateAsync(planet, { abortEarly: false });
 
-/**
- * validate the new satellite to ensure they meet the required schema
- * @param satellite - the new satellite to add to a solar system
- * @returns {Promise<any>}
- */
-const validateSatellite = async satellite =>
-    satelliteSchema.validateAsync(satellite);
-
-module.exports = { validatePlanet, validateSatellite };
+module.exports = { validatePlanet };

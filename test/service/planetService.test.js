@@ -8,11 +8,6 @@ const {
 } = require('../../app/service/planetService');
 
 jest.mock('../../app/repository/planetRepository');
-jest.mock('../../app/util/validators', () => {
-    return {
-        validatePlanet: jest.fn(),
-    };
-});
 
 describe('getPlanets', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -49,7 +44,7 @@ describe('getPlanets', () => {
                 name: 'Mars',
             },
         ];
-        jest.spyOn(planetRepository, 'findAllBySolarSystem').mockImplementation(
+        planetRepository.findAllBySolarSystem.mockImplementation(
             () => expectedSolarSummary
         );
         const result = await getPlanets('milky way');
@@ -57,10 +52,7 @@ describe('getPlanets', () => {
         expect(result).toEqual(expectedSolarSummary);
     });
     test('should return an empty array for a non-existant solar system', async () => {
-        jest.spyOn(
-            planetRepository,
-            'findAllBySolarSystem'
-        ).mockImplementation(() => []);
+        planetRepository.findAllBySolarSystem.mockImplementation(() => []);
         const result = await getPlanets('test');
         expect(planetRepository.findAllBySolarSystem).toHaveBeenCalledTimes(1);
         expect(result).toEqual([]);
@@ -94,17 +86,13 @@ describe('getPlanet', () => {
             hasRingSystem: false,
             hasGlobalMagneticField: false,
         };
-        jest.spyOn(planetRepository, 'findByName').mockImplementation(
-            () => expectedPlanet
-        );
+        planetRepository.findByName.mockImplementation(() => expectedPlanet);
         const result = await getPlanet('milky way', 'Earth');
         expect(planetRepository.findByName).toHaveBeenCalledTimes(1);
         expect(result).toEqual(expectedPlanet);
     });
     test('should return null for a non-existant planet', async () => {
-        jest.spyOn(planetRepository, 'findByName').mockImplementation(
-            () => null
-        );
+        planetRepository.findByName.mockImplementation(() => null);
         const result = await getPlanet('milky way', 'test');
         expect(planetRepository.findByName).toHaveBeenCalledTimes(1);
         expect(result).toBeNull();
@@ -167,17 +155,28 @@ describe('updatePlanet', () => {
                 hasRingSystem: false,
                 hasGlobalMagneticField: false,
             };
-            jest.spyOn(planetRepository, 'createPlanet').mockImplementation(
+            validators.validatePlanet = jest.fn(() => true);
+            planetRepository.createPlanet.mockImplementation(
                 () => expectedPlanet
-            );
-            jest.spyOn(validators, 'validatePlanet').mockImplementation(
-                () => true
             );
         });
         test('should not throw any exceptions for a valid planet object', async () => {
+            validators.validatePlanet = jest.fn(() => true);
             expect(
                 async () => await updatePlanet('milky way', updatedPlanet)
             ).not.toThrow();
+        });
+        test('should not try to create a planet when the request object is invalid', async () => {
+            try {
+                await updatePlanet('milky way', {});
+            } catch (err) {
+                expect(planetRepository.createPlanet).toHaveBeenCalledTimes(0);
+                expect(err.status).toEqual(400);
+                // expect the missing required fields to be returned in the error message
+                expect(err.message).toEqual(
+                    '"name" is required. "mass" is required. "diameter" is required. "density" is required. "gravity" is required. "escapeVelocity" is required. "distanceFromSun" is required. "meanTemperature" is required. "numberOfMoons" is required. "hasRingSystem" is required. "hasGlobalMagneticField" is required'
+                );
+            }
         });
         test('should update and return the updated planet information', async () => {
             const result = await updatePlanet('milky way', updatedPlanet);
