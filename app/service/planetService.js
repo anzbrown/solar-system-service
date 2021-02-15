@@ -1,4 +1,4 @@
-const { capitalize, pascalCase, throwError } = require('../util/utils');
+const { throwError } = require('../util/utils');
 const { validatePlanet } = require('../util/validators');
 const {
     findAllBySolarSystem,
@@ -11,7 +11,7 @@ const {
  * @returns planets list
  */
 const getPlanets = async solarSystem =>
-    await findAllBySolarSystem(pascalCase(solarSystem));
+    await findAllBySolarSystem(solarSystem.toLowerCase());
 
 /**
  * get information on a specific planet
@@ -20,7 +20,7 @@ const getPlanets = async solarSystem =>
  * @returns detailed information on specific planet
  */
 const getPlanet = async (solarSystem, name) =>
-    await findByName(pascalCase(solarSystem), capitalize(name));
+    await findByName(solarSystem.toLowerCase(), name.toLowerCase());
 
 /**
  * functions as the Create new planet and Update existing planet method
@@ -35,7 +35,7 @@ const getPlanet = async (solarSystem, name) =>
 const updatePlanet = async (solarSystem, planet) => {
     try {
         // pascal case the solar system name for consistency
-        planet.solarSystem = pascalCase(solarSystem);
+        planet.solarSystem = solarSystem.toLowerCase();
         await validatePlanet(planet);
         const inserted = await createPlanet(planet);
         // report whether a new planet was inserted or updated using the results from the repository

@@ -10,37 +10,37 @@ jest.mock('../../app/repository/planetRepository');
 
 describe('getPlanets', () => {
     beforeEach(() => jest.clearAllMocks());
-    test('should retrieve all planets in the Milky Way solar system', async () => {
+    test('should retrieve all planets in the milky way solar system', async () => {
         const expectedSolarSummary = [
             {
-                name: 'Mercury',
+                name: 'mercury',
             },
             {
-                name: 'Venus',
+                name: 'venus',
             },
             {
-                name: 'Sol',
+                name: 'sol',
             },
             {
-                name: 'Pluto',
+                name: 'pluto',
             },
             {
-                name: 'Uranus',
+                name: 'uranus',
             },
             {
-                name: 'Earth',
+                name: 'earth',
             },
             {
-                name: 'Neptune',
+                name: 'neptune',
             },
             {
-                name: 'Jupiter',
+                name: 'jupiter',
             },
             {
-                name: 'Saturn',
+                name: 'saturn',
             },
             {
-                name: 'Mars',
+                name: 'mars',
             },
         ];
         planetRepository.findAllBySolarSystem.mockImplementation(
@@ -62,8 +62,8 @@ describe('getPlanet', () => {
     beforeEach(() => jest.clearAllMocks());
     test('should retrieve information on a specific planet in the solar system', async () => {
         const expectedPlanet = {
-            name: 'Earth',
-            solarSystem: 'Milky Way',
+            name: 'earth',
+            solarSystem: 'milky way',
             mass: 5.97,
             diameter: 12756,
             density: 5514,
@@ -86,7 +86,7 @@ describe('getPlanet', () => {
             hasGlobalMagneticField: false,
         };
         planetRepository.findByName.mockImplementation(() => expectedPlanet);
-        const result = await getPlanet('milky way', 'Earth');
+        const result = await getPlanet('milky way', 'earth');
         expect(planetRepository.findByName).toHaveBeenCalledTimes(1);
         expect(result).toEqual(expectedPlanet);
     });
@@ -112,8 +112,8 @@ describe('updatePlanet', () => {
             jest.clearAllMocks();
             beforeEach(() => jest.clearAllMocks());
             updatedPlanet = {
-                name: 'Earth',
-                solarSystem: 'Milky Way',
+                name: 'earth',
+                solarSystem: 'milky way',
                 mass: 6.66,
                 diameter: 987654,
                 density: 5514,
@@ -136,8 +136,8 @@ describe('updatePlanet', () => {
                 hasGlobalMagneticField: false,
             };
             newPlanet = {
-                name: 'New Earth',
-                solarSystem: 'Andromeda',
+                name: 'new earth',
+                solarSystem: 'andromeda',
                 mass: 6.66,
                 diameter: 987654,
                 density: 5514,
@@ -173,8 +173,8 @@ describe('updatePlanet', () => {
             };
             expectedUpdatedPlanet = {
                 updatedPlanet: {
-                    name: 'Earth',
-                    solarSystem: 'Milky Way',
+                    name: 'earth',
+                    solarSystem: 'milky way',
                     mass: 6.66,
                     diameter: 987654,
                     density: 5514,
@@ -200,8 +200,8 @@ describe('updatePlanet', () => {
             };
             expectedNewPlanet = {
                 updatedPlanet: {
-                    name: 'New Earth',
-                    solarSystem: 'Andromeda',
+                    name: 'new earth',
+                    solarSystem: 'andromeda',
                     mass: 6.66,
                     diameter: 987654,
                     density: 5514,
@@ -252,7 +252,7 @@ describe('updatePlanet', () => {
             expect(result).toEqual(expectedUpdatedPlanet);
         });
         test('should create and return the updated planet information', async () => {
-            const result = await updatePlanet('Andromeda', newPlanet);
+            const result = await updatePlanet('andromeda', newPlanet);
             expect(result).toEqual(expectedNewPlanet);
         });
     });
